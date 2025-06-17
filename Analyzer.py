@@ -2,13 +2,14 @@ import streamlit as st
 import pdfplumber
 import google.generativeai as genai
 
-genai.configure(api_key=st.secrets["GEMINI_API_KEY"])
+# Set your Gemini API key
+genai.configure(api_key="AIzaSyBnkz8GvimgBdkRRHQxspkb19EXjafo7mY")  # Replace with your actual Gemini API key
 
 # Load the Gemini model (choose a valid one)
 model = genai.GenerativeModel(model_name="models/gemini-1.5-flash")  # You can switch to a different valid one
 
 # Streamlit page setup
-st.set_page_config(page_title="AI Resume Matcher", layout="centered")
+st.set_page_config(page_title="AI Resume Analyzer & Matcher", layout="centered")
 st.title("📄 AI Resume Analyzer & Matcher")
 
 # Input Fields
