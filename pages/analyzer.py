@@ -1,24 +1,22 @@
 import streamlit as st
 import pdfplumber
 import google.generativeai as genai
-import os
 
-# 🔑 Set your Gemini API key
-genai.configure(api_key="AIzaSyBnkz8GvimgBdkRRHQxspkb19EXjafo7mY")  # Replace with your actual Gemini API key
+genai.configure(api_key=st.secrets["GEMINI_API_KEY"])
 
-# ✅ Load the Gemini model (choose a valid one)
+# Load the Gemini model (choose a valid one)
 model = genai.GenerativeModel(model_name="models/gemini-1.5-flash")  # You can switch to a different valid one
 
-# 🌐 Streamlit page setup
+# Streamlit page setup
 st.set_page_config(page_title="AI Resume Matcher", layout="centered")
 st.title("📄 AI Resume Analyzer & Matcher")
 
-# ✏️ Input Fields
+# Input Fields
 username = st.text_input("Enter your name:")
 resume_file = st.file_uploader("Upload your Resume (PDF)", type=["pdf"])
 job_description = st.text_area("Paste the Job Description here")
 
-# 🔍 Function to calculate match score
+# Function to calculate match score
 def get_match_score(resume_text, job_description):
     prompt = f"""
     You are a resume screening expert.
@@ -36,7 +34,7 @@ def get_match_score(resume_text, job_description):
     response = model.generate_content(prompt)
     return response.text.strip()
 
-# 💡 Function to get suggestions
+# Function to get suggestions
 def get_improvement_suggestions(resume_text, job_description):
     prompt = f"""
     You are a helpful resume coach.
@@ -54,7 +52,7 @@ def get_improvement_suggestions(resume_text, job_description):
     response = model.generate_content(prompt)
     return response.text.strip()
 
-# 🚀 Main button logic
+# Main button logic
 if st.button("Analyze Resume"):
     if username and resume_file and job_description:
         try:
@@ -65,12 +63,12 @@ if st.button("Analyze Resume"):
                 score_text = get_match_score(resume_text, job_description)
                 match_score = int(''.join(filter(str.isdigit, score_text)))
 
-            # 📊 Display score
+            # Display score
             st.subheader(f"✅ Match Score for {username}:")
             st.metric(label="Match Score (%)", value=f"{match_score}%")
             st.progress(match_score)
 
-            # 🎨 Color badge
+            # Color badge
             color = "green" if match_score >= 75 else "orange" if match_score >= 50 else "red"
             st.markdown(f"""
                 <div style="background-color:{color};padding:10px;border-radius:5px;color:white;text-align:center;">
@@ -78,7 +76,7 @@ if st.button("Analyze Resume"):
                 </div>
             """, unsafe_allow_html=True)
 
-            # 💬 Suggestions
+            # Suggestions
             with st.spinner("Generating improvement suggestions..."):
                 suggestions = get_improvement_suggestions(resume_text, job_description)
 
