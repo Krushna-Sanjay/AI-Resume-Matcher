@@ -91,4 +91,3 @@ if st.button("Analyze Resume"):
             st.error(f"❌ An error occurred: {e}")
     else:
         st.warning("Please fill in all fields (name, resume, job description).")
-
