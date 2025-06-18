@@ -58,3 +58,16 @@ def get_user_profile(username):
             "created_at": row[3]
         }
     return None
+
+# Delete profile 
+def delete_user_profile(username):
+    cursor.execute("DELETE FROM user_profiles WHERE username = ?", (username,))
+    # cursor.execute("DELETE FROM resume_analysis WHERE username = ?", (username,))
+    conn.commit()
+
+
+def get_resume_analysis_history(username):
+    cursor.execute("SELECT resume_text, job_description, match_score, analyzed_at FROM resume_analysis WHERE username = ?", (username,))
+    return cursor.fetchall()
+
+
