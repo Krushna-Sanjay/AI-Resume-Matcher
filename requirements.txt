@@ -1,0 +1,5 @@
+streamlit 
+pdfplumber 
+google-generativeai
+sqlite3
+datetime
