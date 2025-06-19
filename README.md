@@ -1,4 +1,4 @@
-# 🧠 AI Resume Matcher
+# 📄 AI Resume Matcher
 
 An AI-powered Streamlit web app that analyzes and matches resumes with job descriptions using Google's Generative AI (Gemini). It also allows users to manage their profile, upload resumes, and track past analyses — all stored in a local SQLite database.
 
